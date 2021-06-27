@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: © 2021 Grégoire Duchêne <gduchene@awhk.org>
+// SPDX-License-Identifier: ISC
+
 // This implements a simple example that can be tested on a machine
 // running systemd.
 package main
