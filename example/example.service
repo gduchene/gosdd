@@ -1,0 +1,9 @@
+[Unit]
+Description=gosdd Example Service
+
+[Service]
+Type=simple
+ExecStart=%h/example
+
+[Install]
+WantedBy=default.target
