@@ -15,8 +15,7 @@ import (
 	"os/signal"
 	"strings"
 	"sync"
-
-	"golang.org/x/sys/unix"
+	"syscall"
 
 	"go.awhk.org/gosdd"
 )
@@ -52,7 +51,7 @@ func main() {
 
 func listenAll(fds []*os.File) {
 	sig := make(chan os.Signal, 1)
-	signal.Notify(sig, os.Interrupt, unix.SIGTERM)
+	signal.Notify(sig, os.Interrupt, syscall.SIGTERM)
 
 	srvs := make([]echoServer, 0, len(fds))
 	wg := &sync.WaitGroup{}
