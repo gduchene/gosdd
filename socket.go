@@ -14,7 +14,16 @@
 // is the documentation for the C API.
 package gosdd
 
-import "os"
+import (
+	"errors"
+	"os"
+)
+
+// ErrNoSDSupport is a generic error that is returned when gosdd has no
+// systemd support, either because the library is compiled on a system
+// that is not Linux or because it was explicitly disabled with the
+// ‘nosystemd’ build tag.
+var ErrNoSDSupport = errors.New("no systemd support")
 
 // SDListenFDs is a wrapper around sd_listen_fds.
 func SDListenFDs(unsetenv bool) ([]*os.File, error) {

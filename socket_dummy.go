@@ -8,9 +8,9 @@ package gosdd
 import "os"
 
 func sdListenFDs(bool) ([]*os.File, error) {
-	return nil, nil
+	return nil, ErrNoSDSupport
 }
 
 func sdListenFDsWithNames(bool) (map[string]*os.File, error) {
-	return nil, nil
+	return nil, ErrNoSDSupport
 }
