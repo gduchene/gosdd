@@ -12,8 +12,8 @@ package gosdd
 import "C"
 
 import (
-	"fmt"
 	"os"
+	"syscall"
 	"unsafe"
 )
 
@@ -24,7 +24,7 @@ func sdListenFDs(unsetenv bool) ([]*os.File, error) {
 	}
 	c := C.sd_listen_fds(i)
 	if c < 0 {
-		return nil, fmt.Errorf("sd_listen_fds: %s", C.GoString(C.strerror(-c)))
+		return nil, syscall.Errno(-c)
 	}
 	if c == 0 {
 		return nil, nil
@@ -44,7 +44,7 @@ func sdListenFDsWithNames(unsetenv bool) (map[string]*os.File, error) {
 	var arr **C.char
 	c := C.sd_listen_fds_with_names(i, &arr)
 	if c < 0 {
-		return nil, fmt.Errorf("sd_listen_fds_with_names: %s", C.GoString(C.strerror(-c)))
+		return nil, syscall.Errno(-c)
 	}
 	if c == 0 {
 		return nil, nil
