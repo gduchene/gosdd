@@ -28,7 +28,7 @@ func main() {
 
 	if !*useNames {
 		fds, err := gosdd.SDListenFDs(true)
-		if err != nil {
+		if err != nil && err != gosdd.ErrNoSDSupport {
 			log.Fatalln(err)
 		}
 		log.Printf("Received %d file descriptors from systemd.", len(fds))
