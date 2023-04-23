@@ -17,7 +17,7 @@ import (
 	"unsafe"
 )
 
-func sdListenFDs(unsetenv bool) ([]*os.File, error) {
+func SDListenFDs(unsetenv bool) ([]*os.File, error) {
 	i := C.int(0)
 	if unsetenv {
 		i = C.int(1)
@@ -36,7 +36,7 @@ func sdListenFDs(unsetenv bool) ([]*os.File, error) {
 	return fds, nil
 }
 
-func sdListenFDsWithNames(unsetenv bool) (map[string]*os.File, error) {
+func SDListenFDsWithNames(unsetenv bool) (map[string]*os.File, error) {
 	i := C.int(0)
 	if unsetenv {
 		i = C.int(1)
@@ -49,8 +49,7 @@ func sdListenFDsWithNames(unsetenv bool) (map[string]*os.File, error) {
 	if c == 0 {
 		return nil, nil
 	}
-	// See https://github.com/golang/go/wiki/cgo#turning-c-arrays-into-go-slices.
-	names := (*[1 << 28]*C.char)(unsafe.Pointer(arr))[:c:c]
+	names := unsafe.Slice(arr, c)
 	fds := make(map[string]*os.File)
 	for fd := uintptr(C.SD_LISTEN_FDS_START); fd < uintptr(C.SD_LISTEN_FDS_START+c); fd++ {
 		name := C.GoString(names[int(fd-C.SD_LISTEN_FDS_START)])
